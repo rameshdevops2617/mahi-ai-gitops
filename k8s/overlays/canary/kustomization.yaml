@@ -1,5 +1,7 @@
 resources:
   - ../../base
 
-patchesStrategicMerge:
-  - deployment-patch.yaml
+images:
+  - name: rameshcloud/mahi-backend
+    newTag: v1.0.2
+

@@ -4,9 +4,5 @@ metadata:
   name: mahi-backend
 spec:
   replicas: 1
-  template:
-    spec:
-      containers:
-        - name: backend
-          image: rameshcloud/mahi-backend:IMAGE_TAG
+
 
