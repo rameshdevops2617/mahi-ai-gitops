@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mahi-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mahi-backend
+  template:
+    metadata:
+      labels:
+        app: mahi-backend
+    spec:
+      containers:
+        - name: backend
+          image: YOUR_DOCKER_USERNAME/mahi-backend:IMAGE_TAG
+          ports:
+            - containerPort: 8000
