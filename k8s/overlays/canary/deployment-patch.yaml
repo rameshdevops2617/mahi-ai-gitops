@@ -3,9 +3,10 @@ kind: Deployment
 metadata:
   name: mahi-backend
 spec:
-  replicas: 1   # Canary
+  replicas: 1
   template:
     spec:
       containers:
         - name: backend
-          image: YOUR_DOCKER_USERNAME/mahi-backend:v1.0.2
+          image: rameshcloud/mahi-backend:IMAGE_TAG
+
