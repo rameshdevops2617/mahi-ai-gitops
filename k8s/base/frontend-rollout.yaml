@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: mahi-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mahi-frontend
+  template:
+    metadata:
+      labels:
+        app: mahi-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: rameshcloud/mahi-frontend
+          ports:
+            - containerPort: 80
+  strategy:
+    canary:
+      stableService: mahi-frontend
+      canaryService: mahi-frontend-canary
+      steps:
+        - setWeight: 10
+        - pause: { duration: 30 }
+        - setWeight: 50
+        - pause: { duration: 60 }
+        - setWeight: 100

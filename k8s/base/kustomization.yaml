@@ -2,4 +2,6 @@ resources:
   - backend-rollout.yaml
   - backend-service.yaml
   - backend-canary-service.yaml
-
+  - frontend-rollout.yaml
+  - frontend-service.yaml
+  - frontend-canary-service.yaml
