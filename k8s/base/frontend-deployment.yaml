@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mahi-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mahi-frontend
+  template:
+    metadata:
+      labels:
+        app: mahi-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: rameshcloud/mahi-frontend
+          ports:
+            - containerPort: 80
