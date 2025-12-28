@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: mahi-backend
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: mahi-backend
@@ -17,3 +17,9 @@ spec:
           image: rameshcloud/mahi-backend
           ports:
             - containerPort: 8000
+          env:
+            - name: MODEL_NAME
+              value: "phi"
+            - name: OLLAMA_URL
+              value: "http://ollama:11434/api/generate"
+
