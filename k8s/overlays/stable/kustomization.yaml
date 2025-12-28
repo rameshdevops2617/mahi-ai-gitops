@@ -7,10 +7,10 @@ resources:
 images:
   - name: rameshcloud/mahi-backend
 <<<<<<< HEAD
-    newTag: v1.2.0
+    newTag: 
 
   - name: rameshcloud/mahi-frontend
-    newTag: v1.2.0
+    newTag: 
 =======
     newTag: 
 
