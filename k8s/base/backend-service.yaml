@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mahi-backend
+spec:
+  selector:
+    app: mahi-backend
+  ports:
+    - port: 8000
+      targetPort: 8000

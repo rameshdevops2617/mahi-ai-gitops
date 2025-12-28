@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: mahi-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mahi-backend
+  template:
+    metadata:
+      labels:
+        app: mahi-backend
+    spec:
+      containers:
+        - name: backend
+          image: rameshcloud/mahi-backend
+          ports:
+            - containerPort: 8000
+          env:
+            - name: MODEL_NAME
+              value: "phi"
+            - name: OLLAMA_URL
+              value: "http://ollama:11434/api/chat"
+  strategy:
+    canary:
+      stableService: mahi-backend
+      canaryService: mahi-backend-canary
+      steps:
+        - setWeight: 10
+        - pause: { duration: 30 }
+        - setWeight: 50
+        - pause: { duration: 60 }
+        - setWeight: 100
