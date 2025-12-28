@@ -3,7 +3,11 @@ resources:
 
 images:
   - name: rameshcloud/mahi-backend
+<<<<<<< HEAD
     newTag: v1.0.9
+=======
+    newTag: v1.0.9
+>>>>>>> c4d6f59e9a9d73ffc31737f9e34d95c43d0f7029
 
   - name: rameshcloud/mahi-frontend
     newTag: v1.0.9
