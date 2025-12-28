@@ -1,7 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
 resources:
+  # Backend
   - backend-rollout.yaml
   - backend-service.yaml
   - backend-canary-service.yaml
+
+  # Frontend
   - frontend-rollout.yaml
   - frontend-service.yaml
   - frontend-canary-service.yaml
+
+  # Ingress
+  - frontend-ingress.yaml
+
