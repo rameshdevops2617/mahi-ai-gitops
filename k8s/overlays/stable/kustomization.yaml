@@ -6,7 +6,14 @@ resources:
 
 images:
   - name: rameshcloud/mahi-backend
+<<<<<<< HEAD
     newTag: v1.2.0
 
   - name: rameshcloud/mahi-frontend
     newTag: v1.2.0
+=======
+    newTag: 
+
+  - name: rameshcloud/mahi-frontend
+    newTag: 
+>>>>>>> 71f81c09f21cbf78c8b9fea8d0b2dfa1482f90fe
