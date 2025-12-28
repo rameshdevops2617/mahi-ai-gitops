@@ -1,2 +1,9 @@
 resources:
   - ../../base
+
+images:
+  - name: rameshcloud/mahi-backend
+    newTag: v1.0.9
+
+  - name: rameshcloud/mahi-frontend
+    newTag: v1.0.9
