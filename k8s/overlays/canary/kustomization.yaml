@@ -6,7 +6,7 @@ resources:
 
 images:
   - name: rameshcloud/mahi-backend
-    newTag: v1.2.0
+    newTag: v1.2.1
 
   - name: rameshcloud/mahi-frontend
-    newTag: v1.2.0
+    newTag: v1.2.1
