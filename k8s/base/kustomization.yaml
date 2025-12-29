@@ -14,4 +14,8 @@ resources:
 
   # Ingress
   - frontend-ingress.yaml
+  
+  #redis
+  - redis-deployment.yaml
+  - redis-service.yaml
 
