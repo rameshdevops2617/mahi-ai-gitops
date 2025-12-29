@@ -1,7 +1,8 @@
 resources:
+  - prometheus-rbac.yaml
   - prometheus-config.yaml
   - prometheus-deployment.yaml
   - prometheus-service.yaml
+  - kube-state-metrics.yaml
   - grafana-deployment.yaml
   - grafana-service.yaml
-  - kube-state-metrics.yaml
