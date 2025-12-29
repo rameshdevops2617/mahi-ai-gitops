@@ -14,7 +14,7 @@ data:
         relabel_configs:
           - action: keep
             source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
-            regex: "true"
+            regex: "8000|80"
 
       - job_name: "kube-state-metrics"
         static_configs:
