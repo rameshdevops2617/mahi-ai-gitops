@@ -4,3 +4,4 @@ resources:
   - prometheus-service.yaml
   - grafana-deployment.yaml
   - grafana-service.yaml
+  - kube-state-metrics.yaml
