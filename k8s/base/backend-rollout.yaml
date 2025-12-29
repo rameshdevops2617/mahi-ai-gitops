@@ -7,6 +7,7 @@ spec:
   selector:
     matchLabels:
       app: mahi-backend
+
   template:
     metadata:
       labels:
@@ -14,10 +15,12 @@ spec:
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "8000"
+
     spec:
       containers:
         - name: backend
-          image: rameshcloud/mahi-backend
+          image: rameshcloud/mahi-backend:v2.3.3   # 🔴 FORCE NEW TAG
+          imagePullPolicy: Always                  # 🔴 FORCE PULL
           ports:
             - containerPort: 8000
           env:
@@ -25,13 +28,10 @@ spec:
               value: "phi"
             - name: OLLAMA_URL
               value: "http://ollama:11434/api/generate"
+
   strategy:
     canary:
       stableService: mahi-backend
       canaryService: mahi-backend-canary
       steps:
-        - setWeight: 10
-        - pause: { duration: 30 }
-        - setWeight: 50
-        - pause: { duration: 60 }
         - setWeight: 100
