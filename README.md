@@ -1,7 +1,8 @@
 # 🚀 MAHI AI – GitOps Repository
 
 ## 📌 Overview
-https://chatgpt.com/s/m_695434cc2c288191bcce81fcfd2844eb
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/ec70666f-64a3-49d0-bcb2-0feb95f9a3a9" />
+
 
 This repository follows **GitOps principles** to manage the deployment, rollout, and monitoring of the **MAHI AI application** on Kubernetes using:
 
