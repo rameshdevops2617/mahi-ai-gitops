@@ -11,22 +11,20 @@ data:
     scrape_configs:
 
       - job_name: "node-exporter"
-        static_configs:
-          - targets:
-              - node-exporter.monitoring.svc.cluster.local:9100
+        kubernetes_sd_configs:
+          - role: endpoints
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_service_name]
+            action: keep
+            regex: node-exporter
+          - source_labels: [__meta_kubernetes_namespace]
+            action: keep
+            regex: monitoring
+          - source_labels: [__meta_kubernetes_endpoint_port_name]
+            action: keep
+            regex: metrics
 
       - job_name: "kube-state-metrics"
         static_configs:
           - targets:
               - kube-state-metrics.kube-system.svc.cluster.local:8080
-
-      - job_name: "mahi-backend"
-        kubernetes_sd_configs:
-          - role: service
-        relabel_configs:
-          - source_labels: [__meta_kubernetes_service_name]
-            action: keep
-            regex: mahi-backend
-          - source_labels: [__meta_kubernetes_namespace]
-            action: keep
-            regex: mahi-ai-canary
