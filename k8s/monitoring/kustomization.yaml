@@ -6,4 +6,6 @@ resources:
   - kube-state-metrics.yaml
   - grafana-deployment.yaml
   - grafana-service.yaml
+  - node-exporter.yaml
+
 
