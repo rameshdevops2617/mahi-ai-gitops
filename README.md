@@ -1,37 +1,37 @@
-🚀 MAHI AI – GitOps Repository
-📌 Overview
+# 🚀 MAHI AI – GitOps Repository
 
-This repository follows GitOps principles to manage the deployment, rollout, and monitoring of the MAHI AI application on Kubernetes using:
+## 📌 Overview
 
-Argo CD for continuous delivery
+This repository follows **GitOps principles** to manage the deployment, rollout, and monitoring of the **MAHI AI application** on Kubernetes using:
 
-Argo Rollouts for Canary deployments
+* **Argo CD** for continuous delivery
+* **Argo Rollouts** for Canary deployments
+* **Kustomize** for environment overlays
+* **Prometheus & Grafana** for monitoring and observability
 
-Kustomize for environment overlays
+👉 **All Kubernetes state is driven from Git**.
+👉 **No manual kubectl apply for application changes**.
 
-Prometheus & Grafana for monitoring and observability
+---
 
-👉 All Kubernetes state is driven from Git.
-👉 No manual kubectl apply for application changes.
-
-🧠 What This Repository Manages
+## 🧠 What This Repository Manages
 
 This GitOps repo is responsible for:
 
-Kubernetes manifests (base + overlays)
+* Kubernetes manifests (base + overlays)
+* Canary and Stable deployments
+* Progressive delivery strategy
+* Observability stack
+* Runtime configuration (not application code)
 
-Canary and Stable deployments
+> 🔹 Application source code lives in a **separate repository**
+> 🔹 This repo contains **only desired state**
 
-Progressive delivery strategy
+---
 
-Observability stack
+## 📂 Repository Structure
 
-Runtime configuration (not application code)
-
-🔹 Application source code lives in a separate repository
-🔹 This repo contains only desired state
-
-📂 Repository Structure
+```
 mahi-ai-gitops/
 ├── k8s/
 │   ├── base/
@@ -60,96 +60,92 @@ mahi-ai-gitops/
 │       └── kube-state-metrics.yaml
 │
 └── README.md
+```
 
-🔄 GitOps Workflow (End-to-End)
-1️⃣ CI Pipeline (Application Repo)
+---
 
-Builds backend & frontend Docker images
+## 🔄 GitOps Workflow (End-to-End)
 
-Pushes versioned images (e.g. v1.2.0)
+### 1️⃣ CI Pipeline (Application Repo)
 
-Updates image tags in this GitOps repo
+* Builds backend & frontend Docker images
+* Pushes versioned images (e.g. `v1.2.0`)
+* Updates image tags in this GitOps repo
+* Commits & pushes changes
 
-Commits & pushes changes
+### 2️⃣ Argo CD (Continuous Delivery)
 
-2️⃣ Argo CD (Continuous Delivery)
+* Watches this GitOps repository
+* Detects Git changes
+* Syncs Kubernetes cluster automatically
+* Ensures **cluster state = Git state**
 
-Watches this GitOps repository
+### 3️⃣ Argo Rollouts (Canary Strategy)
 
-Detects Git changes
+* Canary traffic split:
 
-Syncs Kubernetes cluster automatically
+  * 10% → pause
+  * 50% → pause
+  * 100% → promote
+* Separate **canary** and **stable** services
+* Zero downtime deployment
 
-Ensures cluster state = Git state
+---
 
-3️⃣ Argo Rollouts (Canary Strategy)
+## 🧪 Canary Deployment Strategy
 
-Canary traffic split:
+**Backend & Frontend** both use Argo Rollouts.
 
-10% → pause
+### Canary Flow:
 
-50% → pause
+1. New version deployed to canary pods
+2. Traffic gradually shifted
+3. Health & metrics observed
+4. Automatic or manual promotion to stable
 
-100% → promote
+### Rollout Benefits:
 
-Separate canary and stable services
+* Safe deployments
+* Fast rollback
+* Production-grade strategy used by FAANG
 
-Zero downtime deployment
+---
 
-🧪 Canary Deployment Strategy
+## 📊 Monitoring & Observability
 
-Backend & Frontend both use Argo Rollouts.
+### 🔹 Prometheus
 
-Canary Flow:
+* Scrapes:
 
-New version deployed to canary pods
+  * Backend metrics
+  * kube-state-metrics
+  * node-exporter
+* Central metrics store
 
-Traffic gradually shifted
+### 🔹 Grafana
 
-Health & metrics observed
+* Visualizes:
 
-Automatic or manual promotion to stable
+  * Node CPU / Memory
+  * Pod health
+  * Application metrics
+* Uses Prometheus service DNS (in-cluster)
 
-Rollout Benefits:
+### Metrics Validation Examples:
 
-Safe deployments
-
-Fast rollback
-
-Production-grade strategy used by FAANG
-
-📊 Monitoring & Observability
-🔹 Prometheus
-
-Scrapes:
-
-Backend metrics
-
-kube-state-metrics
-
-node-exporter
-
-Central metrics store
-
-🔹 Grafana
-
-Visualizes:
-
-Node CPU / Memory
-
-Pod health
-
-Application metrics
-
-Uses Prometheus service DNS (in-cluster)
-
-Metrics Validation Examples:
+```promql
 up
 node_cpu_seconds_total
 kube_pod_info
+```
 
-🧩 Architecture
-High-Level Flow
+---
+
+## 🧩 Architecture
+
+### High-Level Flow
+
+```
 Developer → CI Pipeline → GitOps Repo → Argo CD
                                   ↓
                            Argo Rollouts
@@ -159,39 +155,41 @@ Developer → CI Pipeline → GitOps Repo → Argo CD
                           Kubernetes Cluster
                                   ↓
                     Prometheus → Grafana Dashboards
+```
 
-🖼 Architecture Diagram
+---
 
-📌 Diagram file (place in repo root or /docs folder):
+## 🖼 Architecture Diagram
 
+📌 **Diagram file** (place in repo root or `/docs` folder):
+
+```
 architecture.png
+```
 
+> The diagram illustrates:
+>
+> * GitOps flow
+> * Argo CD sync
+> * Canary rollout
+> * Monitoring stack
+> * Service communication
 
-The diagram illustrates:
+---
 
-GitOps flow
+## 🔐 Key DevOps Concepts Demonstrated
 
-Argo CD sync
+* GitOps (declarative delivery)
+* Progressive delivery (Canary)
+* Infrastructure as Code
+* Kubernetes-native observability
+* Production-ready deployment patterns
 
-Canary rollout
+---
 
-Monitoring stack
+## ✅ How to Verify Deployment (Optional)
 
-Service communication
-
-🔐 Key DevOps Concepts Demonstrated
-
-GitOps (declarative delivery)
-
-Progressive delivery (Canary)
-
-Infrastructure as Code
-
-Kubernetes-native observability
-
-Production-ready deployment patterns
-
-✅ How to Verify Deployment (Optional)
+```bash
 # Argo CD sync status
 argocd app get mahi-ai
 
@@ -203,29 +201,31 @@ kubectl port-forward svc/prometheus -n monitoring 9091:9090
 
 # Grafana
 kubectl port-forward svc/grafana -n monitoring 3001:3000
+```
 
-🏆 Why This Project Matters
+---
 
-This repository demonstrates real-world DevOps practices, not toy examples:
+## 🏆 Why This Project Matters
 
-Matches enterprise delivery patterns
+This repository demonstrates **real-world DevOps practices**, not toy examples:
 
-Resume-ready for Senior DevOps / Platform roles
+* Matches enterprise delivery patterns
+* Resume-ready for Senior DevOps / Platform roles
+* Suitable for interviews, demos, and learning
 
-Suitable for interviews, demos, and learning
+---
 
-👤 Author
+## 👤 Author
 
-MAHI AI – DevOps & Platform Engineering Project
+**Ramesh – DevOps & Platform Engineering Project**
 
-✅ NEXT (Optional Enhancements)
+---
+
+### ✅ NEXT (Optional Enhancements)
 
 If you want later:
 
-Alertmanager (Slack / Email)
-
-HPA autoscaling
-
-Multi-cluster GitOps
-
-Security policies (OPA / Kyverno)
+* Alertmanager (Slack / Email)
+* HPA autoscaling
+* Multi-cluster GitOps
+* Security policies (OPA / Kyverno)
