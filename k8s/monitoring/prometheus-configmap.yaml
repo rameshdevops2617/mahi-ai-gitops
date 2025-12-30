@@ -7,9 +7,24 @@ data:
   prometheus.yml: |
     global:
       scrape_interval: 15s
-      evaluation_interval: 15s
 
     scrape_configs:
+
+      - job_name: "kubernetes-nodes"
+        kubernetes_sd_configs:
+          - role: node
+        scheme: https
+        tls_config:
+          insecure_skip_verify: true
+        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        relabel_configs:
+          - action: labelmap
+            regex: __meta_kubernetes_node_label_(.+)
+
+      - job_name: "kube-state-metrics"
+        static_configs:
+          - targets:
+              - kube-state-metrics.kube-system.svc.cluster.local:8080
 
       - job_name: "mahi-backend"
         kubernetes_sd_configs:
@@ -21,25 +36,3 @@ data:
           - action: keep
             source_labels: [__meta_kubernetes_namespace]
             regex: mahi-ai-canary
-          - action: keep
-            source_labels: [__meta_kubernetes_service_port_number]
-            regex: "8000"
-
-      - job_name: "mahi-frontend"
-        kubernetes_sd_configs:
-          - role: service
-        relabel_configs:
-          - action: keep
-            source_labels: [__meta_kubernetes_service_name]
-            regex: mahi-frontend
-          - action: keep
-            source_labels: [__meta_kubernetes_namespace]
-            regex: mahi-ai-canary
-          - action: keep
-            source_labels: [__meta_kubernetes_service_port_number]
-            regex: "80"
-
-      - job_name: "kube-state-metrics"
-        static_configs:
-          - targets:
-              - kube-state-metrics.monitoring.svc.cluster.local:8080
