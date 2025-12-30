@@ -10,16 +10,10 @@ data:
 
     scrape_configs:
 
-      - job_name: "kubernetes-nodes"
-        kubernetes_sd_configs:
-          - role: node
-        scheme: https
-        tls_config:
-          insecure_skip_verify: true
-        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-        relabel_configs:
-          - action: labelmap
-            regex: __meta_kubernetes_node_label_(.+)
+      - job_name: "node-exporter"
+        static_configs:
+          - targets:
+              - node-exporter.monitoring.svc.cluster.local:9100
 
       - job_name: "kube-state-metrics"
         static_configs:
@@ -30,9 +24,9 @@ data:
         kubernetes_sd_configs:
           - role: service
         relabel_configs:
-          - action: keep
-            source_labels: [__meta_kubernetes_service_name]
+          - source_labels: [__meta_kubernetes_service_name]
+            action: keep
             regex: mahi-backend
-          - action: keep
-            source_labels: [__meta_kubernetes_namespace]
+          - source_labels: [__meta_kubernetes_namespace]
+            action: keep
             regex: mahi-ai-canary
