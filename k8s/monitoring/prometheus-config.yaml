@@ -22,23 +22,6 @@ scrape_configs:
         regex: "8000"
 
   # =========================
-  # MAHI FRONTEND (React)
-  # =========================
-  - job_name: "mahi-frontend"
-    kubernetes_sd_configs:
-      - role: service
-    relabel_configs:
-      - action: keep
-        source_labels: [__meta_kubernetes_service_name]
-        regex: mahi-frontend
-      - action: keep
-        source_labels: [__meta_kubernetes_namespace]
-        regex: mahi-ai-canary
-      - action: keep
-        source_labels: [__meta_kubernetes_service_port_number]
-        regex: "80"
-
-  # =========================
   # KUBE STATE METRICS
   # =========================
   - job_name: "kube-state-metrics"
